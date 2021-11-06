@@ -2,6 +2,8 @@ package compost
 
 import ShouldProbablyBeAMacroLibrary.*
 
+import compost.MemLayouts.MemLayout
+
 import scala.compiletime.*
 import scala.deriving.*
 import scala.quoted.{Expr, Quotes, Type}
@@ -23,8 +25,12 @@ object Experiments extends App:
 
   case class Person(name: String, age : Int)
 
+  //case class Rectangle(x : Int, y : Int) derives MemLayout
+
   val x = refineWithFields[Person]
-  //doesn't work
-  println(x.name)
+  println(x.age)
+
+
+
 
 

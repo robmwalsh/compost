@@ -9,6 +9,8 @@ import scala.deriving.*
 
 object ShouldProbablyBeAMacroLibrary:
 
+  def selectDynamicImpl(name: Expr[String])(using Quotes):Expr[Any] = name
+
   transparent inline def refineWithFields[T <: Product] : Any =
     ${refineWithFieldsImpl[T]}
 
@@ -27,8 +29,9 @@ object ShouldProbablyBeAMacroLibrary:
       case '{ $m: Mirror.ProductOf[T] {type MirroredElemLabels = labels; type MirroredElemTypes = types } } =>
         loop[labels, types](TypeRepr.of[Inspect[T]]).asType match {
           case '[r] =>
-            val res = '{new Inspect[r]{}}
+            val res = '{new Inspect[T]{}.asInstanceOf[r]}
             println(res.show)
+            println(res)
             res
         }
 

@@ -1,6 +1,7 @@
 package compost
 
+import ShouldProbablyBeAMacroLibrary.selectDynamicImpl
 
 trait Inspect[T] extends Selectable:
   //private val dummy = structureOf[T]
-  def selectDynamic(name:String):Any = s"$name exists"
+  inline def selectDynamic(name:String):Any = ${selectDynamicImpl('{name})}
